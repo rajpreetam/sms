@@ -1,0 +1,88 @@
+{% extends 'Student/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="breadcrumb-holder">
+    <div class="container-fluid">
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+        <li class="breadcrumb-item active">Feedback</li>
+      </ul>
+    </div>
+</div>
+
+<section>
+    <div class="container-fluid">
+        <br>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <!--Card Header-->
+                    <div class="card-header back_color">
+                        <h4 class="card-title">Feedback</h4> 
+                    </div>
+
+                    <!--Card Body-->
+                    <form action="" method="POST">
+                      {% csrf_token %}
+                    <div class="card-body">     
+                        
+                        <div class="form-group">
+                            <label>Feedback Message </label>
+                            <textarea name="message" class="form-control" rows="6" placeholder="Feedback Messge"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Leave Feedback</button>
+                    </div>
+                  </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <!--Card Header-->
+                    <div class="card-header " style="background-color: #33b35a;color:white">
+                        <h4 class="card-title">Feedback History</h4> 
+                    </div>
+
+                    <!--Card Body-->
+                    <div class="card-body">     
+                        <div class="table-responsive">
+                            <table class="table">
+                              <thead>
+                                <tr>
+                                  <th>Id</th>
+                                  <th>Date</th>
+                                  <th>Feedback</th>
+                                  <th>Reply</th>                                
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {% for feedback in feedbacks %}
+                                <tr>
+                                  <th scope="row">{{feedback.id}}</th>
+                                  <td>{{feedback.date_created}}</td>
+                                  <td>{{feedback.feedback}}</td>
+                                  {% if feedback.reply == "" %}
+                                  <td style="color: red;">Not replied yet.</td>
+                                  {% else %}
+                                  <td>{{feedback.reply}}</td>
+                                  {% endif %}
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
